@@ -1,4 +1,4 @@
-package com.backend.restblogapp;
+package com.backend.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
