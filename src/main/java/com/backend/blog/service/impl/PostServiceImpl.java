@@ -7,6 +7,7 @@ import com.backend.blog.service.PostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -22,6 +23,14 @@ public class PostServiceImpl implements PostService {
         Post post = mapToEntity(postDto);
         Post newPost = postRepository.save(post);
         return mapToDTO(newPost);
+    }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        List<Post> postList = postRepository.findAll();
+        return postList.stream()
+                .map(post -> mapToDTO(post))
+                .collect(Collectors.toList());
     }
 
     private PostDto mapToDTO(Post post) {
