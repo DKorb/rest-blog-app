@@ -8,6 +8,7 @@ import com.backend.blog.exception.ResourceNotFoundException;
 import com.backend.blog.repository.CommentRepository;
 import com.backend.blog.repository.PostRepository;
 import com.backend.blog.service.CommentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,15 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
 
+    private ModelMapper modelMapper;
 
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository,
+                              PostRepository postRepository,
+                              ModelMapper modelMapper) {
+
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -116,21 +122,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private CommentDto mapToDTO(Comment comment) {
-        CommentDto commentDto = new CommentDto();
+
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
+
+/*        CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setName(comment.getName());
         commentDto.setEmail(comment.getEmail());
-        commentDto.setBody(comment.getBody());
+        commentDto.setBody(comment.getBody());*/
 
         return commentDto;
     }
 
     private Comment mapToEntity(CommentDto commentDto) {
-        Comment comment = new Comment();
+
+        Comment comment = modelMapper.map(commentDto, Comment.class);
+
+/*        Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setName(commentDto.getName());
         comment.setEmail(commentDto.getEmail());
-        comment.setBody(commentDto.getBody());
+        comment.setBody(commentDto.getBody());*/
 
         return comment;
     }
