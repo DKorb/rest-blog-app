@@ -30,4 +30,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex,
+                                                               WebRequest webRequest) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
+                webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
