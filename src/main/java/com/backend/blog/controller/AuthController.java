@@ -1,6 +1,6 @@
 package com.backend.blog.controller;
 
-import com.backend.blog.dto.LoginDto;
+import com.backend.blog.dto.SignInDto;
 import com.backend.blog.dto.SignUpDto;
 import com.backend.blog.entity.Role;
 import com.backend.blog.entity.User;
@@ -40,6 +40,17 @@ public class AuthController {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<String> authenticateUser(@RequestBody SignInDto signInDto) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                signInDto.getUsernameOrEmail(),
+                signInDto.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+
+        return new ResponseEntity<>("User signed-in successfully.", HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/signup")
