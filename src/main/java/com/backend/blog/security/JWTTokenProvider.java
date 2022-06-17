@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JWTTokenProvider {
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
@@ -28,13 +28,13 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
 
         return token;
     }
 
-    public String getUsernameFromJWT(String token) {
+    public String getUsernameFromJwt(String token) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
