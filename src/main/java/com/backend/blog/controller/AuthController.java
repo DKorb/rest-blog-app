@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
@@ -79,7 +79,7 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role role = roleRepository.findByName("USER").get();
+        Role role = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
