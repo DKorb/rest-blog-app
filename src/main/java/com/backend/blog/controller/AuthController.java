@@ -8,6 +8,8 @@ import com.backend.blog.entity.User;
 import com.backend.blog.repository.RoleRepository;
 import com.backend.blog.repository.UserRepository;
 import com.backend.blog.security.JWTTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+@Api(value = "Auth controller exposes signing and signup REST API")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -49,6 +52,7 @@ public class AuthController {
         this.tokenProvider = tokenProvider;
     }
 
+    @ApiOperation(value = "REST API to register new user to application")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody SignInDto signInDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -62,6 +66,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
+    @ApiOperation(value = "REST API to login user to application")
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@RequestBody SignUpDto signUpDto) {
 
