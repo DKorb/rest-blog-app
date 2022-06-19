@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@ApiModel(value = "Register model information")
+@ApiModel(value = "Pagination model information")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
