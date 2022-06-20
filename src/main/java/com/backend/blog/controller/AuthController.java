@@ -10,6 +10,7 @@ import com.backend.blog.repository.UserRepository;
 import com.backend.blog.security.JWTTokenProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 @Api(value = "Auth controller exposes signing and signup REST API")
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -38,19 +40,6 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     private JWTTokenProvider tokenProvider;
-
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserRepository userRepository,
-                          RoleRepository roleRepository,
-                          PasswordEncoder passwordEncoder,
-                          JWTTokenProvider tokenProvider) {
-
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenProvider = tokenProvider;
-    }
 
     @ApiOperation(value = "REST API to login user to application")
     @PostMapping("/signin")

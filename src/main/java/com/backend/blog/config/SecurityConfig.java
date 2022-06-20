@@ -23,10 +23,6 @@ public class SecurityConfig {
 
     private JWTAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(JWTAuthenticationEntryPoint authenticationEntryPoint) {
-        this.authenticationEntryPoint = authenticationEntryPoint;
-    }
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -1,5 +1,6 @@
 package com.backend.blog.config;
 
+import com.backend.blog.utils.AppConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -15,12 +16,10 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
     private ApiKey apiKey() {
         return new ApiKey(
                 "JWT",
-                AUTHORIZATION_HEADER,
+                AppConstants.HEADER_NAME,
                 "header");
     }
 
@@ -50,7 +49,9 @@ public class SwaggerConfig {
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
     }
 
     private List<SecurityReference> defaultAuth() {

@@ -7,4 +7,8 @@ public class AppConstants {
     public static final String DEFAULT_SORT_BY = "id";
     public static final String DEFAULT_SORT_DIRECTION = "asc";
 
+    public static final String HEADER_NAME = "Authorization";
+
+    public static final String HEADER_VALUE = "Bearer ";
+
 }

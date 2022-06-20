@@ -12,17 +12,17 @@ import java.util.Date;
 @Component
 public class JWTTokenProvider {
 
-    @Value("${app.jwt-secret}")
+    @Value("${spring.security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${app.expiration-milliseconds}")
+    @Value("${spring.security.expiration.expirationTime}")
     private int jwtExpiration;
 
     public String generateToken(Authentication authentication) {
 
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + this.jwtExpiration);
+        Date expireDate = new Date(currentDate.getTime() + jwtExpiration);
 
         String token = Jwts.builder()
                 .setSubject(username)

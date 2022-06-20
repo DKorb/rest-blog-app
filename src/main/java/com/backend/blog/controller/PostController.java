@@ -6,6 +6,7 @@ import com.backend.blog.service.PostService;
 import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Api(value = "CRUD REST API for posts resources")
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/posts")
 public class PostController {
 
     private PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     @ApiOperation(value = "Create new post REST API")
     @PreAuthorize("hasRole('ADMIN')")

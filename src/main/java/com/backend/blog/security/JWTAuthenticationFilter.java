@@ -1,5 +1,7 @@
 package com.backend.blog.security;
 
+import com.backend.blog.utils.AppConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -29,6 +32,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String token = getJwtFromRequest(request);
+
+        log.info(token);
 
         if(StringUtils.hasText(token) && tokenProvider.isValidateToken(token)){
 
@@ -48,9 +53,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = request.getHeader(AppConstants.HEADER_NAME);
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AppConstants.HEADER_VALUE)) {
             return bearerToken.substring(7, bearerToken.length());
         }
 
