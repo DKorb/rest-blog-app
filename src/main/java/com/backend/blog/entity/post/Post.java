@@ -1,5 +1,6 @@
-package com.backend.blog.entity;
+package com.backend.blog.entity.post;
 
+import com.backend.blog.entity.comment.Comment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,14 +12,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
+@Table(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(nullable = false)

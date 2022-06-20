@@ -1,4 +1,4 @@
-package com.backend.blog.entity;
+package com.backend.blog.entity.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

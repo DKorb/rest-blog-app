@@ -1,5 +1,6 @@
-package com.backend.blog.entity;
+package com.backend.blog.entity.comment;
 
+import com.backend.blog.entity.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

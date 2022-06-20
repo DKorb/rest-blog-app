@@ -1,4 +1,4 @@
-package com.backend.blog.dto;
+package com.backend.blog.dto.auth;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

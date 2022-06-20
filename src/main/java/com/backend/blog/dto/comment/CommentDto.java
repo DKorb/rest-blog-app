@@ -1,4 +1,4 @@
-package com.backend.blog.dto;
+package com.backend.blog.dto.comment;
 
 
 import io.swagger.annotations.ApiModel;

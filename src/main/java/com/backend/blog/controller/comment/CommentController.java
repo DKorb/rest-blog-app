@@ -1,7 +1,7 @@
-package com.backend.blog.controller;
+package com.backend.blog.controller.comment;
 
-import com.backend.blog.dto.CommentDto;
-import com.backend.blog.service.CommentService;
+import com.backend.blog.dto.comment.CommentDto;
+import com.backend.blog.service.comment.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

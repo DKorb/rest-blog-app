@@ -1,6 +1,6 @@
-package com.backend.blog.repository;
+package com.backend.blog.repository.role;
 
-import com.backend.blog.entity.Role;
+import com.backend.blog.entity.role.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

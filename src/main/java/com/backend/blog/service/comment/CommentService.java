@@ -1,6 +1,6 @@
-package com.backend.blog.service;
+package com.backend.blog.service.comment;
 
-import com.backend.blog.dto.CommentDto;
+import com.backend.blog.dto.comment.CommentDto;
 
 import java.util.List;
 

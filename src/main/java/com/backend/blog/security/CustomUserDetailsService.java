@@ -1,8 +1,8 @@
 package com.backend.blog.security;
 
-import com.backend.blog.entity.Role;
-import com.backend.blog.entity.User;
-import com.backend.blog.repository.UserRepository;
+import com.backend.blog.entity.role.Role;
+import com.backend.blog.entity.user.User;
+import com.backend.blog.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

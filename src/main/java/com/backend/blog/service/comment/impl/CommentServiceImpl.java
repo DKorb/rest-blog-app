@@ -1,13 +1,13 @@
-package com.backend.blog.service.impl;
+package com.backend.blog.service.comment.impl;
 
-import com.backend.blog.dto.CommentDto;
-import com.backend.blog.entity.Comment;
-import com.backend.blog.entity.Post;
+import com.backend.blog.dto.comment.CommentDto;
+import com.backend.blog.entity.comment.Comment;
+import com.backend.blog.entity.post.Post;
 import com.backend.blog.exception.BlogAPIException;
 import com.backend.blog.exception.ResourceNotFoundException;
-import com.backend.blog.repository.CommentRepository;
-import com.backend.blog.repository.PostRepository;
-import com.backend.blog.service.CommentService;
+import com.backend.blog.repository.comment.CommentRepository;
+import com.backend.blog.repository.post.PostRepository;
+import com.backend.blog.service.comment.CommentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;

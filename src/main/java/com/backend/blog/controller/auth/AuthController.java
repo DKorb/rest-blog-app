@@ -1,13 +1,14 @@
-package com.backend.blog.controller;
+package com.backend.blog.controller.auth;
 
-import com.backend.blog.dto.JWTAuthResponse;
-import com.backend.blog.dto.SignInDto;
-import com.backend.blog.dto.SignUpDto;
-import com.backend.blog.entity.Role;
-import com.backend.blog.entity.User;
-import com.backend.blog.repository.RoleRepository;
-import com.backend.blog.repository.UserRepository;
+import com.backend.blog.dto.auth.JWTAuthResponse;
+import com.backend.blog.dto.auth.SignInDto;
+import com.backend.blog.dto.auth.SignUpDto;
+import com.backend.blog.entity.role.Role;
+import com.backend.blog.entity.user.User;
+import com.backend.blog.repository.role.RoleRepository;
+import com.backend.blog.repository.user.UserRepository;
 import com.backend.blog.security.JWTTokenProvider;
+import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -73,7 +74,7 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_USER").get();
+        Role role = roleRepository.findByName(AppConstants.ROLE_PREFIX + "USER").get();
         user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);

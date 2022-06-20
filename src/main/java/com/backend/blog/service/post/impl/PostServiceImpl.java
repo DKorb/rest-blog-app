@@ -1,11 +1,11 @@
-package com.backend.blog.service.impl;
+package com.backend.blog.service.post.impl;
 
-import com.backend.blog.dto.PostDto;
-import com.backend.blog.dto.PostResponse;
-import com.backend.blog.entity.Post;
+import com.backend.blog.dto.post.PostDto;
+import com.backend.blog.dto.post.PostResponse;
+import com.backend.blog.entity.post.Post;
 import com.backend.blog.exception.ResourceNotFoundException;
-import com.backend.blog.repository.PostRepository;
-import com.backend.blog.service.PostService;
+import com.backend.blog.repository.post.PostRepository;
+import com.backend.blog.service.post.PostService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
-package com.backend.blog.repository;
+package com.backend.blog.repository.comment;
 
-import com.backend.blog.entity.Comment;
+import com.backend.blog.entity.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

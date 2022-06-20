@@ -1,7 +1,7 @@
-package com.backend.blog.service;
+package com.backend.blog.service.post;
 
-import com.backend.blog.dto.PostDto;
-import com.backend.blog.dto.PostResponse;
+import com.backend.blog.dto.post.PostDto;
+import com.backend.blog.dto.post.PostResponse;
 import org.springframework.stereotype.Service;
 
 

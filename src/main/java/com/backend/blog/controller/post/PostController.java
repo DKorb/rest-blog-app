@@ -1,8 +1,8 @@
-package com.backend.blog.controller;
+package com.backend.blog.controller.post;
 
-import com.backend.blog.dto.PostDto;
-import com.backend.blog.dto.PostResponse;
-import com.backend.blog.service.PostService;
+import com.backend.blog.dto.post.PostDto;
+import com.backend.blog.dto.post.PostResponse;
+import com.backend.blog.service.post.PostService;
 import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
