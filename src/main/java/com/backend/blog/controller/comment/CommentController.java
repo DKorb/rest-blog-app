@@ -1,6 +1,7 @@
 package com.backend.blog.controller.comment;
 
 import com.backend.blog.dto.comment.CommentDto;
+import com.backend.blog.security.annotation.ForUser;
 import com.backend.blog.service.comment.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ public class CommentController {
     private CommentService commentService;
 
     @ApiOperation(value = "Create new comment REST API")
+    @ForUser
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long id,
                                                     @Valid @RequestBody CommentDto commentDto) {
@@ -41,6 +43,7 @@ public class CommentController {
     }
 
     @ApiOperation(value = "Update comment by post and comment id REST API")
+    @ForUser
     @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateCommentById(@PathVariable(value = "postId") long postId,
                                                         @PathVariable(value = "commentId") long commentId,
@@ -49,7 +52,7 @@ public class CommentController {
     }
 
     @ApiOperation(value = "Delete comment by post and comment id REST API")
-
+    @ForUser
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<String> deleteCommentById(@PathVariable(value = "postId") long postId,
                                                     @PathVariable(value = "commentId") long commentId) {

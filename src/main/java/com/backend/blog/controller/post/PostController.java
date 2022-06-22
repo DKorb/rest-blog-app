@@ -2,6 +2,7 @@ package com.backend.blog.controller.post;
 
 import com.backend.blog.dto.post.PostDto;
 import com.backend.blog.dto.post.PostResponse;
+import com.backend.blog.security.annotation.ForAdmin;
 import com.backend.blog.service.post.PostService;
 import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
@@ -23,7 +24,7 @@ public class PostController {
     private PostService postService;
 
     @ApiOperation(value = "Create new post REST API")
-    @PreAuthorize("hasRole('ADMIN')")
+    @ForAdmin
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
@@ -47,7 +48,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "Update post by id REST API")
-    @PreAuthorize("hasRole('ADMIN')")
+    @ForAdmin
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto,
                                               @PathVariable(name = "id") long id) {
@@ -56,7 +57,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "Delete post by id REST API")
-    @PreAuthorize("hasRole('ADMIN')")
+    @ForAdmin
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
         postService.deletePostById(id);
