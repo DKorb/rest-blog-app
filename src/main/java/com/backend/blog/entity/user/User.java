@@ -2,6 +2,7 @@ package com.backend.blog.entity.user;
 
 import com.backend.blog.entity.role.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,6 +23,12 @@ public final class User {
 
     @Column(nullable = false)
     private String name;
+
+    @Embedded
+    private userDetails userDetails;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(nullable = false, unique = true)
     private String username;
