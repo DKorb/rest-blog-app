@@ -16,11 +16,11 @@ number of posts, which page the user is on and if it is the last page.
 ```sh
 https://rest-blog-app-heroku.herokuapp.com/swagger-ui/#
 ```
-Default administration account -
-Email: admin@test.java Password: admin
 
-Default user account -
-Email: user@test.java Password: user
+|Role|E-mail|Password|
+|:---|:---|:---:|
+|Admin account|admin@test.java|admin|
+|User account|user@test.java|user|
 
 ## Technologies
 * Java 18
