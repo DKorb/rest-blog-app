@@ -4,10 +4,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @ApiModel(value = "JWT response")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class JWTAuthResponse {
 
     @ApiModelProperty(value = "token to access")

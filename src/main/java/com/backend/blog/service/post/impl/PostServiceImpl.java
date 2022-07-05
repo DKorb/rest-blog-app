@@ -7,6 +7,7 @@ import com.backend.blog.exception.ResourceNotFoundException;
 import com.backend.blog.repository.post.PostRepository;
 import com.backend.blog.service.post.PostService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;

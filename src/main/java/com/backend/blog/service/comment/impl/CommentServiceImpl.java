@@ -8,7 +8,7 @@ import com.backend.blog.exception.ResourceNotFoundException;
 import com.backend.blog.repository.comment.CommentRepository;
 import com.backend.blog.repository.post.PostRepository;
 import com.backend.blog.service.comment.CommentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;

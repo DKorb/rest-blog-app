@@ -12,13 +12,14 @@ import com.backend.blog.repository.user.UserRepository;
 import com.backend.blog.service.user.UserService;
 import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 

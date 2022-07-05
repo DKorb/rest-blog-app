@@ -6,6 +6,7 @@ import com.backend.blog.service.comment.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "CRUD REST API for comments resources")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController()
 @RequestMapping("/api/v1")
 public class CommentController {
