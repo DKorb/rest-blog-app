@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 

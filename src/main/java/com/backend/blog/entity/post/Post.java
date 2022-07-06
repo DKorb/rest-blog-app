@@ -1,6 +1,7 @@
 package com.backend.blog.entity.post;
 
 import com.backend.blog.entity.comment.Comment;
+import com.backend.blog.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,5 +31,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User author;
 
 }

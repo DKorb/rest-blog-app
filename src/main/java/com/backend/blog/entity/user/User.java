@@ -1,5 +1,7 @@
 package com.backend.blog.entity.user;
 
+import com.backend.blog.entity.comment.Comment;
+import com.backend.blog.entity.post.Post;
 import com.backend.blog.entity.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -45,5 +49,13 @@ public final class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comments = new ArrayList<>();
 
 }

@@ -1,12 +1,14 @@
 --liquibase formatted sql
 --changeset DKorb:1
 
+
 create table comments
 (
     id      bigint       not null auto_increment,
     body    varchar(255) not null,
     email   varchar(255) not null,
     name    varchar(255) not null,
+    user_id bigint,
     post_id bigint       not null,
     primary key (id)
 ) engine = InnoDB;
@@ -26,6 +28,7 @@ create table posts
     content     varchar(255) not null,
     description varchar(255) not null,
     title       varchar(255) not null,
+    user_id     bigint,
     primary key (id)
 ) engine = InnoDB;
 
@@ -67,9 +70,34 @@ alter table users
     add constraint UK_r43af9ap4edm43mmtq01oddj6 unique (username);
 
 alter table comments
+    add constraint FK8omq0tc18jd43bu5tjh6jvraq
+        foreign key (user_id)
+            references users (id);
+
+alter table comments
     add constraint FKh4c7lvsc298whoyd4w9ta25cr
         foreign key (post_id)
             references posts (id);
+
+alter table likes
+    add constraint FKe4guax66lb963pf27kvm7ikik
+        foreign key (comment_id)
+            references comments (id);
+
+alter table likes
+    add constraint FKry8tnr4x2vwemv2bb0h5hyl0x
+        foreign key (post_id)
+            references posts (id);
+
+alter table likes
+    add constraint FKnvx9seeqqyy71bij291pwiwrg
+        foreign key (user_id)
+            references users (id);
+
+alter table posts
+    add constraint FK5lidm6cqbc7u4xhqpxm898qme
+        foreign key (user_id)
+            references users (id);
 
 alter table user_roles
     add constraint FKh8ciramu9cc9q3qcqiv4ue8a6

@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 
 @Api(value = "Auth controller exposes signing and signup REST API")
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -33,6 +31,12 @@ public class AuthController {
     private UserService userService;
 
     private JWTTokenProvider tokenProvider;
+
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, JWTTokenProvider tokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+    }
 
     @ApiOperation(value = "REST API to login user to application")
     @PostMapping("/signin")
