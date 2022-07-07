@@ -8,10 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,30 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-
     private UserService userService;
 
-    private JWTTokenProvider tokenProvider;
+    private AuthService authService;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, JWTTokenProvider tokenProvider) {
-        this.authenticationManager = authenticationManager;
+    public AuthController(UserService userService, AuthServiceImpl authService) {
         this.userService = userService;
-        this.tokenProvider = tokenProvider;
+        this.authService = authService;
     }
 
     @ApiOperation(value = "REST API to login user to application")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody SignInDto signInDto) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                signInDto.getUsernameOrEmail(),
-                signInDto.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = tokenProvider.generateToken(authentication);
-
-        return ResponseEntity.ok(new JWTAuthResponse(token));
+        return ResponseEntity.ok(authService.createToken(signInDto));
     }
 
     @ApiOperation(value = "REST API to register new user to application")
