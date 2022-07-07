@@ -7,4 +7,6 @@ public interface UserService {
 
     UserDto registerUser(SignUpDto signUpDto);
 
+    User currentLoggedUser(String token);
+
 }

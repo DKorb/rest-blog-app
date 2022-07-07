@@ -1,5 +1,6 @@
 package com.backend.blog.user;
 
+import com.backend.blog.security.JWTTokenProvider;
 import com.backend.blog.security.dto.SignUpDto;
 import com.backend.blog.role.Role;
 import com.backend.blog.user.dto.UserDto;
@@ -8,7 +9,9 @@ import com.backend.blog.exception.LoginInUseException;
 import com.backend.blog.role.RoleRepository;
 import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.Collections;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private static final Integer AGE = 0;
@@ -29,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     private ModelMapper modelMapper;
+
+    private JWTTokenProvider jwtTokenProvider;
 
 
     @Override
@@ -64,5 +70,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public User currentLoggedUser(String token) {
+        String email = jwtTokenProvider.getUsernameFromJwt(token);
+        log.info(email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
     }
 }
