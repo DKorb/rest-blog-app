@@ -2,10 +2,10 @@ package com.backend.blog.post;
 
 import com.backend.blog.post.dto.PostDto;
 import com.backend.blog.post.dto.PostResponse;
-import com.backend.blog.post.Post;
 import com.backend.blog.exception.ResourceNotFoundException;
-import com.backend.blog.post.PostRepository;
-import com.backend.blog.post.PostService;
+import com.backend.blog.user.User;
+import com.backend.blog.user.UserService;
+import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,11 +25,41 @@ public class PostServiceImpl implements PostService {
 
     private ModelMapper modelMapper;
 
+    private UserService userService;
+
+
     @Override
-    public PostDto createPost(PostDto postDto) {
-        Post post = mapToEntity(postDto);
-        Post newPost = postRepository.save(post);
+    public PostDto createPost(String token, PostDto postDto) {
+
+        Post newPost = postRepository.save(
+                buildPost(
+                        token,
+                        postDto.getContent(),
+                        postDto.getTitle(),
+                        postDto.getDescription()
+                )
+        );
+
         return mapToDTO(newPost);
+    }
+
+    private Post buildPost(String token, String content, String title, String description) {
+
+        return Post.builder()
+                .title(title)
+                .description(description)
+                .content(content)
+                .author(getUser(token))
+                .build();
+    }
+
+    @Override
+    public String removeHeaderPrefix(String token) {
+        return token.replace(AppConstants.HEADER_VALUE, "");
+    }
+
+    private User getUser(String token){
+        return userService.currentLoggedUser(token);
     }
 
     @Override

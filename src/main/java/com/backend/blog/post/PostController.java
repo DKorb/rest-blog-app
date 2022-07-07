@@ -6,6 +6,7 @@ import com.backend.blog.security.annotation.ForAdmin;
 import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 @Api(value = "CRUD REST API for posts resources")
 @RestController
 @RequestMapping("/api/v1/posts")
+@Slf4j
 public class PostController {
 
     private PostService postService;
@@ -26,8 +28,11 @@ public class PostController {
     @ApiOperation(value = "Create new post REST API")
     @ForAdmin
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
-        return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto,
+                                              @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
+
+        var tokenValue = postService.removeHeaderPrefix(token);
+        return new ResponseEntity<>(postService.createPost(tokenValue, postDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "GET all posts REST API")
