@@ -1,6 +1,6 @@
 package com.backend.blog.exception;
 
-import com.backend.blog.dto.error.ErrorDetails;
+import com.backend.blog.security.dto.ErrorDetails;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
