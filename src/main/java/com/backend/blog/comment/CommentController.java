@@ -2,6 +2,7 @@ package com.backend.blog.comment;
 
 import com.backend.blog.comment.dto.CommentDto;
 import com.backend.blog.security.annotation.ForUser;
+import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class CommentController {
 
-    private CommentService commentService;
+    private final CommentService commentService;
 
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
@@ -26,8 +27,10 @@ public class CommentController {
     @ForUser
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") long id,
-                                                    @Valid @RequestBody CommentDto commentDto) {
-        return new ResponseEntity<>(commentService.createComment(id, commentDto), HttpStatus.CREATED);
+                                                    @Valid @RequestBody CommentDto commentDto,
+                                                    @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
+        String tokenWithoutPrefix = token.replace(AppConstants.HEADER_VALUE, "");
+        return new ResponseEntity<>(commentService.createComment(tokenWithoutPrefix, id, commentDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "GET all comments by post id REST API")

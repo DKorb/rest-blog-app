@@ -13,9 +13,6 @@ import javax.validation.constraints.Size;
 @Data
 public class CommentDto {
 
-    @ApiModelProperty(value = "Blog comment id")
-    private Long id;
-
     @ApiModelProperty(value = "Blog comment name")
     @NotEmpty(message = "Name should not be null or empty")
     @Size(min = 3, message = "Name should have at least 3 characters")

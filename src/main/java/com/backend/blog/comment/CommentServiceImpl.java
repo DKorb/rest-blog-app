@@ -5,6 +5,9 @@ import com.backend.blog.exception.BlogAPIException;
 import com.backend.blog.exception.ResourceNotFoundException;
 import com.backend.blog.post.Post;
 import com.backend.blog.post.PostRepository;
+import com.backend.blog.post.PostService;
+import com.backend.blog.user.User;
+import com.backend.blog.user.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,24 +22,48 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
+
     private PostRepository postRepository;
+
     private ModelMapper modelMapper;
+
+    private PostService postService;
+
+    private UserService userService;
 
 
     @Override
-    public CommentDto createComment(long postId, CommentDto commentDto) {
+    public CommentDto createComment(String token, long postId, CommentDto commentDto) {
 
-        Comment comment = mapToEntity(commentDto);
+        Comment comment = commentRepository.save(
+                buildComment(
+                        token,
+                        commentDto.getName(),
+                        commentDto.getEmail(),
+                        commentDto.getBody(),
+                        postId
+                )
+        );
 
-        Post post = postRepository
-                .findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+        return mapToDTO(comment);
+    }
 
-        comment.setPost(post);
+    private Comment buildComment(String token, String name, String email, String body, long postId) {
+        return Comment.builder()
+                .name(name)
+                .email(email)
+                .body(body)
+                .author(getUser(token))
+                .post(getPost(postId))
+                .build();
+    }
 
-        Comment newComment = commentRepository.save(comment);
+    private Post getPost(long id) {
+        return postService.getPost(id);
+    }
 
-        return mapToDTO(newComment);
+    private User getUser(String token){
+        return userService.currentLoggedUser(token);
     }
 
     @Override
@@ -112,16 +139,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private CommentDto mapToDTO(Comment comment) {
-
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
-        return commentDto;
-
+        return modelMapper.map(comment, CommentDto.class);
     }
 
     private Comment mapToEntity(CommentDto commentDto) {
-
-        Comment comment = modelMapper.map(commentDto, Comment.class);
-        return comment;
-
+        return modelMapper.map(commentDto, Comment.class);
     }
 }

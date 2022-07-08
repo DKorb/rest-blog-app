@@ -3,6 +3,7 @@ package com.backend.blog.comment;
 import com.backend.blog.post.Post;
 import com.backend.blog.user.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "comments")
 public class Comment {
 
