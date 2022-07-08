@@ -1,7 +1,7 @@
 package com.backend.blog.security;
 
 import com.backend.blog.security.dto.JWTAuthResponse;
-import com.backend.blog.security.dto.SignInDto;
+import com.backend.blog.security.dto.SignInDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,12 +22,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JWTAuthResponse createToken(SignInDto signInDto) {
+    public JWTAuthResponse createToken(SignInDTO signInDto) {
         String token = generateToken(signInDto);
         return new JWTAuthResponse(token);
     }
 
-    private String generateToken(SignInDto signInDto) {
+    private String generateToken(SignInDTO signInDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 signInDto.getUsernameOrEmail(),
                 signInDto.getPassword()));

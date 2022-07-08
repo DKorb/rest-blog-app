@@ -12,7 +12,7 @@ import javax.persistence.Enumerated;
 @ApiModel(value = "Register model information")
 @Data
 @Builder
-public class SignUpDto {
+public class SignUpDTO {
 
     @ApiModelProperty(value = "user first name")
     private String name;

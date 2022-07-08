@@ -1,10 +1,10 @@
 package com.backend.blog.security;
 
 import com.backend.blog.security.dto.JWTAuthResponse;
-import com.backend.blog.security.dto.SignInDto;
+import com.backend.blog.security.dto.SignInDTO;
 
 public interface AuthService {
 
-    JWTAuthResponse createToken(SignInDto signInDto);
+    JWTAuthResponse createToken(SignInDTO signInDto);
 
 }

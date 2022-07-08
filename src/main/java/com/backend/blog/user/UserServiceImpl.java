@@ -1,9 +1,9 @@
 package com.backend.blog.user;
 
 import com.backend.blog.security.JWTTokenProvider;
-import com.backend.blog.security.dto.SignUpDto;
+import com.backend.blog.security.dto.SignUpDTO;
 import com.backend.blog.role.Role;
-import com.backend.blog.user.dto.UserDto;
+import com.backend.blog.user.dto.UserDTO;
 import com.backend.blog.exception.EmailInUseException;
 import com.backend.blog.exception.LoginInUseException;
 import com.backend.blog.role.RoleRepository;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto registerUser(SignUpDto signUpDto) {
+    public UserDTO registerUser(SignUpDTO signUpDto) {
         var email = signUpDto.getEmail();
 
         if (userRepository.existsByEmail(email)) {
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return modelMapper.map(user, UserDto.class);
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @Override

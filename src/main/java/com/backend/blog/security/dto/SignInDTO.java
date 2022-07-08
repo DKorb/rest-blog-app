@@ -6,7 +6,7 @@ import lombok.Data;
 
 @ApiModel(value = "login model information")
 @Data
-public class SignInDto {
+public class SignInDTO {
 
     @ApiModelProperty(value = "username or email to login")
     private String usernameOrEmail;
