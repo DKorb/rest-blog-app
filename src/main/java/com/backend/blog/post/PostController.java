@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @Slf4j
 public class PostController {
 
-    private PostService postService;
+    private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
@@ -31,8 +31,8 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto,
                                               @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
 
-        var tokenValue = postService.removeHeaderPrefix(token);
-        return new ResponseEntity<>(postService.createPost(tokenValue, postDto), HttpStatus.CREATED);
+        String tokenWithoutPrefix = token.replace(AppConstants.HEADER_VALUE, "");
+        return new ResponseEntity<>(postService.createPost(tokenWithoutPrefix, postDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "GET all posts REST API")

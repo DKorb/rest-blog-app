@@ -11,9 +11,10 @@ public interface PostService {
 
     PostDto getPostById(long id);
 
+    Post getPost(long id);
+
     PostDto updatePost(PostDto postDto, long id);
 
     void deletePostById(long id);
 
-    String removeHeaderPrefix(String token);
 }

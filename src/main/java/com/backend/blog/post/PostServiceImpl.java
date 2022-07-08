@@ -53,11 +53,6 @@ public class PostServiceImpl implements PostService {
                 .build();
     }
 
-    @Override
-    public String removeHeaderPrefix(String token) {
-        return token.replace(AppConstants.HEADER_VALUE, "");
-    }
-
     private User getUser(String token){
         return userService.currentLoggedUser(token);
     }
@@ -95,6 +90,13 @@ public class PostServiceImpl implements PostService {
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         return mapToDTO(post);
+    }
+
+    @Override
+    public Post getPost(long id) {
+        return postRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
     }
 
     @Override
