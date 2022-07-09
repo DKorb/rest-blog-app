@@ -9,7 +9,6 @@ import com.backend.blog.exception.LoginInUseException;
 import com.backend.blog.role.RoleRepository;
 import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,10 +18,8 @@ import java.util.Collections;
 
 @AllArgsConstructor
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 
-    private static final Integer AGE = 0;
     private static final String CITY = "Default value";
     private static final String DESCRIPTION = "Default value";
 
@@ -58,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .gender(signUpDto.getGender())
                 .userDetails(userDetails.builder()
-                        .age(AGE)
+                        .age(signUpDto.getAge())
                         .city(CITY)
                         .description(DESCRIPTION)
                         .build())
@@ -75,7 +72,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User currentLoggedUser(String token) {
         String email = jwtTokenProvider.getUsernameFromJwt(token);
-        log.info(email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
     }

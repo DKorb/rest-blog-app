@@ -28,4 +28,6 @@ public class SignUpDTO {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    private Integer age;
+
 }
