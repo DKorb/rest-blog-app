@@ -1,5 +1,6 @@
 package com.backend.blog.post;
 
+import com.backend.blog.like.dto.LikeDTO;
 import com.backend.blog.post.dto.PostDto;
 import com.backend.blog.post.dto.PostResponse;
 import com.backend.blog.security.annotation.ForAdmin;
@@ -72,5 +73,12 @@ public class PostController {
                                             @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
         postService.giveLikeByPostId(token, id);
         return new ResponseEntity<>("You liked this post.", HttpStatus.OK);
+    }
+
+    @ForUser
+    @DeleteMapping("/{id}/like")
+    public ResponseEntity<LikeDTO> unlikePost(@PathVariable(name = "id") long id,
+                                              @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
+        return new ResponseEntity<>(postService.unlikePostById(token, id), HttpStatus.OK);
     }
 }

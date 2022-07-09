@@ -136,4 +136,9 @@ public class PostServiceImpl implements PostService {
     public LikeDTO giveLikeByPostId(String token, long postId) {
         return likeService.giveForPostById(token.replace(AppConstants.HEADER_VALUE, ""), postId);
     }
+
+    @Override
+    public LikeDTO unlikePostById(String token, long id) {
+        return likeService.removeFromPostById(token, id);
+    }
 }

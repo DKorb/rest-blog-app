@@ -20,4 +20,6 @@ public interface PostService {
 
     LikeDTO giveLikeByPostId(String token, long postId);
 
+    LikeDTO unlikePostById(String token, long id);
+
 }
