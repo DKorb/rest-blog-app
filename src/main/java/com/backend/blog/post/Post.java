@@ -1,6 +1,7 @@
 package com.backend.blog.post;
 
 import com.backend.blog.comment.Comment;
+import com.backend.blog.like.Like;
 import com.backend.blog.user.User;
 import lombok.*;
 
@@ -32,6 +33,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Like> myLikes = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

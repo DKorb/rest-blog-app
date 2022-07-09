@@ -1,6 +1,7 @@
 package com.backend.blog.like;
 
 
+import com.backend.blog.exception.LikeWasAlreadyGivenException;
 import com.backend.blog.like.dto.LikeDTO;
 import com.backend.blog.post.Post;
 import com.backend.blog.post.PostService;
@@ -10,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -29,6 +32,10 @@ public class LikeServiceImpl implements LikeService {
         User user = getUser(token);
         Post post = getPost(post_id);
 
+        if (isLikeInPost(user, post)) {
+            throw new LikeWasAlreadyGivenException(post_id);
+        }
+
         Like like = likeRepository.save(buildLikeForPost(user, post));
 
         return LikeMapper.buildForPost(like);
@@ -39,6 +46,15 @@ public class LikeServiceImpl implements LikeService {
                 .user(user)
                 .post(post)
                 .build();
+    }
+
+    private boolean isLikeInPost(User user, Post post) {
+        return post.getMyLikes().stream()
+                .anyMatch(like -> isOwnerOfLike(like, user));
+    }
+
+    private boolean isOwnerOfLike(Like like, User user) {
+        return Objects.equals(like.getUser(), user);
     }
 
     private User getUser(String token){
