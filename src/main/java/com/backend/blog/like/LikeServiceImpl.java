@@ -7,15 +7,15 @@ import com.backend.blog.post.PostService;
 import com.backend.blog.user.User;
 import com.backend.blog.user.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@Transactional
+@AllArgsConstructor(onConstructor = @__(@Lazy))
 public class LikeServiceImpl implements LikeService {
 
-
-    private final ModelMapper modelMapper;
 
     private final LikeRepository likeRepository;
 
@@ -25,15 +25,16 @@ public class LikeServiceImpl implements LikeService {
 
 
     @Override
-    public LikeDTO giveLikeByPostId(String token, long post_id) {
+    public LikeDTO giveForPostById(String token, long post_id) {
         User user = getUser(token);
         Post post = getPost(post_id);
 
         Like like = likeRepository.save(buildLikeForPost(user, post));
-        return modelMapper.map(like, LikeDTO.class);
+
+        return LikeMapper.buildForPost(like);
     }
 
-    private Like buildLikeForPost(User user, Post post){
+    private Like buildLikeForPost(User user, Post post) {
         return Like.builder()
                 .user(user)
                 .post(post)
@@ -47,5 +48,4 @@ public class LikeServiceImpl implements LikeService {
     private Post getPost(long id){
         return postService.getPost(id);
     }
-
 }

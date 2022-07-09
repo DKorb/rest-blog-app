@@ -1,5 +1,7 @@
 package com.backend.blog.post;
 
+import com.backend.blog.like.LikeService;
+import com.backend.blog.like.dto.LikeDTO;
 import com.backend.blog.post.dto.PostDto;
 import com.backend.blog.post.dto.PostResponse;
 import com.backend.blog.exception.ResourceNotFoundException;
@@ -21,11 +23,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    private UserService userService;
+    private final UserService userService;
+
+    private final LikeService likeService;
 
 
     @Override
@@ -33,7 +37,7 @@ public class PostServiceImpl implements PostService {
 
         Post newPost = postRepository.save(
                 buildPost(
-                        token,
+                        token.replace(AppConstants.HEADER_VALUE, ""),
                         postDto.getContent(),
                         postDto.getTitle(),
                         postDto.getDescription()
@@ -70,7 +74,7 @@ public class PostServiceImpl implements PostService {
         List<Post> listOfPosts = posts.getContent();
 
         List<PostDto> content = listOfPosts.stream()
-                .map(post -> mapToDTO(post))
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
 
         PostResponse postResponse = new PostResponse();
@@ -128,7 +132,8 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(post, PostDto.class);
     }
 
-    private Post mapToEntity(PostDto postDto) {
-        return modelMapper.map(postDto, Post.class);
+    @Override
+    public LikeDTO giveLikeByPostId(String token, long postId) {
+        return likeService.giveForPostById(token.replace(AppConstants.HEADER_VALUE, ""), postId);
     }
 }

@@ -3,10 +3,10 @@ package com.backend.blog.post;
 import com.backend.blog.post.dto.PostDto;
 import com.backend.blog.post.dto.PostResponse;
 import com.backend.blog.security.annotation.ForAdmin;
+import com.backend.blog.security.annotation.ForUser;
 import com.backend.blog.utils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,6 @@ import javax.validation.Valid;
 @Api(value = "CRUD REST API for posts resources")
 @RestController
 @RequestMapping("/api/v1/posts")
-@Slf4j
 public class PostController {
 
     private final PostService postService;
@@ -30,9 +29,7 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto,
                                               @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
-
-        String tokenWithoutPrefix = token.replace(AppConstants.HEADER_VALUE, "");
-        return new ResponseEntity<>(postService.createPost(tokenWithoutPrefix, postDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.createPost(token, postDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "GET all posts REST API")
@@ -67,5 +64,13 @@ public class PostController {
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id) {
         postService.deletePostById(id);
         return new ResponseEntity<>("Post deleted successfully.", HttpStatus.OK);
+    }
+
+    @ForUser
+    @PatchMapping("/{id}/like")
+    public ResponseEntity<String> likePost(@PathVariable(name = "id") long id,
+                                            @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
+        postService.giveLikeByPostId(token, id);
+        return new ResponseEntity<>("You liked this post.", HttpStatus.OK);
     }
 }

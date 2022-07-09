@@ -13,9 +13,6 @@ import java.util.Set;
 @Data
 public class PostDto {
 
-    @ApiModelProperty(value = "Blog post id")
-    private Long Id;
-
     @ApiModelProperty(value = "Blog post title")
     @NotEmpty
     @Size(min = 4, message = "Post title should have at least 4 characters")
