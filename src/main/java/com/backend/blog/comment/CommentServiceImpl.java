@@ -3,11 +3,14 @@ package com.backend.blog.comment;
 import com.backend.blog.comment.dto.CommentDto;
 import com.backend.blog.exception.BlogAPIException;
 import com.backend.blog.exception.ResourceNotFoundException;
+import com.backend.blog.like.LikeService;
+import com.backend.blog.like.dto.LikeDTO;
 import com.backend.blog.post.Post;
 import com.backend.blog.post.PostRepository;
 import com.backend.blog.post.PostService;
 import com.backend.blog.user.User;
 import com.backend.blog.user.UserService;
+import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,8 @@ public class CommentServiceImpl implements CommentService {
     private PostService postService;
 
     private UserService userService;
+
+    private LikeService likeService;
 
 
     @Override
@@ -95,6 +100,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment getComment(long id) {
+        return commentRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
+    }
+
+    @Override
     public CommentDto updateCommentById(CommentDto commentDto, long postId, long commentId) {
 
         Post post = postRepository
@@ -136,6 +148,12 @@ public class CommentServiceImpl implements CommentService {
 
 
         commentRepository.delete(comment);
+    }
+
+
+    @Override
+    public LikeDTO giveLikeByCommentId(String token, long commentId) {
+        return likeService.giveForCommentById(token.replace(AppConstants.HEADER_VALUE, ""), commentId);
     }
 
     private CommentDto mapToDTO(Comment comment) {

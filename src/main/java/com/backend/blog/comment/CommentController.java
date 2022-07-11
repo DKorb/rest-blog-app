@@ -63,4 +63,12 @@ public class CommentController {
         commentService.deleteCommentById(postId, commentId);
         return new ResponseEntity<>("Comment deleted successfully.", HttpStatus.OK);
     }
+
+    @ForUser
+    @PatchMapping("/{id}/like")
+    public ResponseEntity<String> likeComment(@PathVariable(name = "id") long id,
+                                              @RequestHeader(name = AppConstants.HEADER_NAME) String token) {
+        commentService.giveLikeByCommentId(token, id);
+        return new ResponseEntity<>("You liked this comment.", HttpStatus.OK);
+    }
 }
