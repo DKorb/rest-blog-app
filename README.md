@@ -8,13 +8,12 @@
 * [Features](#Features)
 
 ## General info
-The application is used to manage posts and comments, including registering and logging in users of the site using a JWT token. 
-A pagination feature has also been added, the REST API returns information about the number of pages, 
-number of posts, which page the user is on and if it is the last page.
+
+The application provides REST API that may be used to manage posts and comments as well as go through the registration and logging user process using a JWT token with a pagination feature included. API returns information about the number of pages and posts whilst notifying what page the user is on, including the last page. Feature for blog users to like and unlike posts and comments has been added aswell.
 
 ## Online version (Heroku)
 ```sh
-https://rest-blog-app-heroku.herokuapp.com/swagger-ui/#
+New version coming soon 
 ```
 
 |Role|E-mail|Password|
@@ -26,6 +25,7 @@ https://rest-blog-app-heroku.herokuapp.com/swagger-ui/#
 * Java 18
 * Spring Boot 5
 * Spring Security 5
+* Hibernate
 * Maven
 * Tomcat
 * MySQL
@@ -33,6 +33,8 @@ https://rest-blog-app-heroku.herokuapp.com/swagger-ui/#
 * DevTools
 * JWT token
 * ModelMapper
+* Liquibase
+* Swagger
 
 ## Features
 ### Administration:
@@ -40,3 +42,4 @@ https://rest-blog-app-heroku.herokuapp.com/swagger-ui/#
 * Comments Management - create, delete, update display all or single comment
 ### User:
 * Comments Management - create, delete, update display all or single comment
+* Likes Management - giving likes to posts and comments with unlike function 
