@@ -13,4 +13,14 @@ public class LikeMapper {
                 .build();
     }
 
+    public static LikeDTO buildForComment(Like like){
+        var comment = like.getComment();
+        var user = like.getUser();
+        return LikeDTO.builder()
+                .comment(comment.getId())
+                .user(user.getId())
+                .build();
+    }
+
+
 }
