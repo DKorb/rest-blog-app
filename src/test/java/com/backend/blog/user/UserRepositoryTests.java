@@ -1,0 +1,67 @@
+package com.backend.blog.user;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+@DataJpaTest
+public class UserRepositoryTests {
+
+    private static final String TEST_EMAIL = "test@test.java";
+    private static final String TEST_NAME = "test_name";
+    private static final String TEST_PASSWORD = "test123";
+    private static final Integer TEST_AGE = 99;
+    private static final String TEST_CITY = "test_city";
+    private static final String TEST_DESCRIPTION = "test_description";
+
+    private static final String TEST_USERNAME = "test_user";
+
+    private static final String NEW_TEST_FIRST_NAME = "new_test_first_name";
+
+    private static final String NEW_TEST_LAST_NAME = "new_test_last_name";
+
+    private static final String NEW_TEST_EMAIL = "new_test@test.java";
+
+
+    @Autowired
+    UserRepository userRepository;
+
+    private User user;
+
+    @BeforeEach
+    public void setup() {
+        user = User.builder()
+                .email(TEST_EMAIL)
+                .gender(Gender.MALE)
+                .name(TEST_NAME)
+                .password(TEST_PASSWORD)
+                .userDetails(userDetails.builder()
+                        .age(TEST_AGE)
+                        .city(TEST_CITY)
+                        .description(TEST_DESCRIPTION)
+                        .build())
+                .build();
+    }
+
+    @Test
+    public void givenUserList_whenFindAll_thenReturnUserList() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        List<User> listAllUsers = userRepository.findAll();
+
+        //then
+        assertThat(listAllUsers).isNotNull();
+        assertThat(listAllUsers.size()).isEqualTo(1);
+    }
+}
