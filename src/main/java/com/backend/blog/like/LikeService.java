@@ -8,4 +8,6 @@ public interface LikeService {
 
     LikeDTO removeFromPostById(String token, long postId);
 
+    LikeDTO giveForCommentById(String token, long postId);
+
 }

@@ -1,8 +1,11 @@
 package com.backend.blog.like;
 
 
+import com.backend.blog.comment.Comment;
+import com.backend.blog.comment.CommentService;
+import com.backend.blog.exception.CommentLikeWasAlreadyGivenException;
 import com.backend.blog.exception.LikeNotOwnerException;
-import com.backend.blog.exception.LikeWasAlreadyGivenException;
+import com.backend.blog.exception.PostLikeWasAlreadyGivenException;
 import com.backend.blog.exception.PostNotExistsException;
 import com.backend.blog.like.dto.LikeDTO;
 import com.backend.blog.post.Post;
@@ -29,6 +32,8 @@ public class LikeServiceImpl implements LikeService {
 
     private final PostService postService;
 
+    private final CommentService commentService;
+
 
     @Override
     public LikeDTO giveForPostById(String token, long post_id) {
@@ -36,7 +41,7 @@ public class LikeServiceImpl implements LikeService {
         Post post = getPost(post_id);
 
         if (isLikeInPost(user, post)) {
-            throw new LikeWasAlreadyGivenException(post_id);
+            throw new PostLikeWasAlreadyGivenException(post_id);
         }
 
         Like like = likeRepository.save(buildLikeForPost(user, post));
@@ -49,6 +54,20 @@ public class LikeServiceImpl implements LikeService {
         Like likeFromPost = getLikeFromPost(token, postId);
         likeRepository.delete(likeFromPost);
         return LikeMapper.buildForPost(likeFromPost);
+    }
+
+    @Override
+    public LikeDTO giveForCommentById(String token, long commentId) {
+        User user = getUser(token);
+        Comment comment = getComment(commentId);
+
+        if (isLikeInComment(user, comment)) {
+            throw new CommentLikeWasAlreadyGivenException(commentId);
+        }
+
+        Like like = likeRepository.save(buildLikeForComment(user, comment));
+
+        return LikeMapper.buildForComment(like);
     }
 
     private Like getLikeFromPost(String token, long id) {
@@ -65,8 +84,20 @@ public class LikeServiceImpl implements LikeService {
                 .build();
     }
 
+    private Like buildLikeForComment(User user, Comment comment) {
+        return Like.builder()
+                .user(user)
+                .comment(comment)
+                .build();
+    }
+
     private boolean isLikeInPost(User user, Post post) {
         return post.getMyLikes().stream()
+                .anyMatch(like -> isOwnerOfLike(like, user));
+    }
+
+    private boolean isLikeInComment(User user, Comment comment) {
+        return comment.getMyLikes().stream()
                 .anyMatch(like -> isOwnerOfLike(like, user));
     }
 
@@ -85,4 +116,9 @@ public class LikeServiceImpl implements LikeService {
     private Post getPost(long id) {
         return postService.getPost(id);
     }
+
+    private Comment getComment(long id) {
+        return commentService.getComment(id);
+    }
+
 }
