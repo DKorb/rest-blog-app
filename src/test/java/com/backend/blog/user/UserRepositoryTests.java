@@ -24,9 +24,9 @@ public class UserRepositoryTests {
 
     private static final String TEST_USERNAME = "test_user";
 
-    private static final String NEW_TEST_FIRST_NAME = "new_test_first_name";
+    private static final String TEST_NEW_USERNAME = "new_test_user";
 
-    private static final String NEW_TEST_LAST_NAME = "new_test_last_name";
+    private static final String NEW_TEST_NAME = "new_test_name";
 
     private static final String NEW_TEST_EMAIL = "new_test@test.java";
 
@@ -43,6 +43,7 @@ public class UserRepositoryTests {
                 .gender(Gender.MALE)
                 .name(TEST_NAME)
                 .password(TEST_PASSWORD)
+                .username(TEST_USERNAME)
                 .userDetails(userDetails.builder()
                         .age(TEST_AGE)
                         .city(TEST_CITY)
@@ -62,6 +63,53 @@ public class UserRepositoryTests {
 
         //then
         assertThat(listAllUsers).isNotNull();
-        assertThat(listAllUsers.size()).isEqualTo(1);
+        assertThat(listAllUsers.size()).isEqualTo(3);
+
     }
+
+    @Test
+    public void givenUserEmail_whenFindByEmail_thenReturnUserObject() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        var userByEmail = userRepository
+                .findByEmail(user.getEmail()).get();
+
+        //then
+        assertThat(userByEmail).isNotNull();
+
+    }
+
+    @Test
+    public void givenUsername_whenFindByUsername_thenReturnUserObject() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        var userByUserName = userRepository
+                .findByUsername(user.getUsername()).get();
+
+        //then
+        assertThat(userByUserName).isNotNull();
+
+    }
+
+    @Test
+    public void givenUserEmailAndUsername_whenFindByUsernameOrEmail_thenReturnUserObject() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        var userByUserNameOrEmail = userRepository
+                .findByUsernameOrEmail(user.getUsername(), user.getEmail()).get();
+
+        //then
+        assertThat(userByUserNameOrEmail).isNotNull();
+
+    }
+
 }
