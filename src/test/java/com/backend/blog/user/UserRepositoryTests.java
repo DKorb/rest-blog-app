@@ -112,4 +112,56 @@ public class UserRepositoryTests {
 
     }
 
+    @Test
+    public void givenUsername_whenUserExists_thenReturnTrue() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        var username = userRepository
+                .existsByUsername(user.getUsername());
+
+        //then
+        assertThat(username).isTrue();
+
+    }
+
+    @Test
+    public void givenEmail_whenUserExists_thenReturnTrue() {
+
+        //given
+        userRepository.save(user);
+
+        //when
+        var userEmail = userRepository
+                .existsByEmail(user.getEmail());
+
+        //then
+        assertThat(userEmail).isTrue();
+
+    }
+
+    @Test
+    public void givenUserObject_whenUpdateUser_thenReturnUpdatedUser() {
+
+        // given
+        userRepository.save(user);
+
+        // when
+        var userById = userRepository
+                .findById(user.getId()).get();
+
+        userById.setEmail(NEW_TEST_EMAIL);
+        userById.setName(NEW_TEST_NAME);
+        userById.setUsername(TEST_NEW_USERNAME);
+
+        var updatedUser = userRepository.save(userById);
+
+        //then
+        assertThat(updatedUser.getEmail()).isEqualTo(NEW_TEST_EMAIL);
+        assertThat(updatedUser.getName()).isEqualTo(NEW_TEST_NAME);
+        assertThat(updatedUser.getUsername()).isEqualTo(TEST_NEW_USERNAME);
+    }
+
 }
