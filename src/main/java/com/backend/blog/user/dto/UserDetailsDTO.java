@@ -1,18 +1,16 @@
-package com.backend.blog.user;
+package com.backend.blog.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
-@lombok.Data
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class userDetails {
+public class UserDetailsDTO {
 
     private Integer age;
 

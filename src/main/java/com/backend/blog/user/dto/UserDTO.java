@@ -18,7 +18,7 @@ public class UserDTO {
 
     private String name;
 
-    private com.backend.blog.user.userDetails userDetails;
+    private UserDetailsDTO userDetails;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

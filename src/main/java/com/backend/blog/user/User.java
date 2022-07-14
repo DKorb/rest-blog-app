@@ -29,7 +29,7 @@ public final class User {
     private String name;
 
     @Embedded
-    private com.backend.blog.user.userDetails userDetails;
+    private UserDetails userDetails;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

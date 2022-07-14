@@ -1,6 +1,10 @@
-package com.backend.blog.user;
+package com.backend.blog.user.unit.repository;
 
 
+import com.backend.blog.user.Gender;
+import com.backend.blog.user.User;
+import com.backend.blog.user.UserRepository;
+import com.backend.blog.user.UserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +20,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserRepositoryTests {
 
     private static final String TEST_EMAIL = "test@test.java";
+
     private static final String TEST_NAME = "test_name";
+
     private static final String TEST_PASSWORD = "test123";
+
     private static final Integer TEST_AGE = 99;
+
     private static final String TEST_CITY = "test_city";
+
     private static final String TEST_DESCRIPTION = "test_description";
 
     private static final String TEST_USERNAME = "test_user";
@@ -44,7 +53,7 @@ public class UserRepositoryTests {
                 .name(TEST_NAME)
                 .password(TEST_PASSWORD)
                 .username(TEST_USERNAME)
-                .userDetails(userDetails.builder()
+                .userDetails(UserDetails.builder()
                         .age(TEST_AGE)
                         .city(TEST_CITY)
                         .description(TEST_DESCRIPTION)
