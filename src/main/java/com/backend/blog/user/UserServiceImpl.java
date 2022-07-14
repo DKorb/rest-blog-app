@@ -9,7 +9,6 @@ import com.backend.blog.exception.LoginInUseException;
 import com.backend.blog.role.RoleRepository;
 import com.backend.blog.utils.AppConstants;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,13 @@ public class UserServiceImpl implements UserService {
     private static final String CITY = "Default value";
     private static final String DESCRIPTION = "Default value";
 
-    private PasswordEncoder passwordEncoder;
+    private static final Integer AGE = 18;
 
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    private ModelMapper modelMapper;
+    private final RoleRepository roleRepository;
 
     private JWTTokenProvider jwtTokenProvider;
 
@@ -48,25 +47,40 @@ public class UserServiceImpl implements UserService {
             throw new LoginInUseException(login);
         }
 
-        User user = User.builder()
-                .name(signUpDto.getName())
-                .username(signUpDto.getUsername())
-                .email(signUpDto.getEmail())
-                .password(passwordEncoder.encode(signUpDto.getPassword()))
-                .gender(signUpDto.getGender())
-                .userDetails(userDetails.builder()
-                        .age(signUpDto.getAge())
+
+        var user = userRepository.save(buildUser(
+                signUpDto.getName(),
+                signUpDto.getUsername(),
+                signUpDto.getEmail(),
+                signUpDto.getPassword(),
+                signUpDto.getGender()));
+
+        return mapFromUser(user);
+    }
+
+    private User buildUser(String name,
+                           String username,
+                           String email,
+                           String password,
+                           Gender gender) {
+        Role role = roleRepository.findByName(AppConstants.ROLE_PREFIX + "USER");
+        return User.builder()
+                .name(name)
+                .username(username)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .gender(gender)
+                .userDetails(UserDetails.builder()
+                        .age(AGE)
                         .city(CITY)
                         .description(DESCRIPTION)
                         .build())
+                .roles(Collections.singleton(role))
                 .build();
+    }
 
-        Role role = roleRepository.findByName(AppConstants.ROLE_PREFIX + "USER").get();
-        user.setRoles(Collections.singleton(role));
-
-        userRepository.save(user);
-
-        return modelMapper.map(user, UserDTO.class);
+    private UserDTO mapFromUser(User user) {
+        return UserMapper.mapUserDTOFromUser(user);
     }
 
     @Override
